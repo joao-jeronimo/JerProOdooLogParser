@@ -5,7 +5,7 @@ from unittest.mock import Mock, MagicMock
 
 class TestOdooTestDigest(unittest.TestCase):
     """
-    Test behaviour of class OdooTestDigest.
+    Test behaviour of class odoo_log_parser.OdooTestDigest.
     """
     
     def test_get_full_test_digest_returns_dbnames(self):
@@ -14,7 +14,7 @@ class TestOdooTestDigest(unittest.TestCase):
         """
         with open(self.odoolog_skels_demo['filename'], "r") as testfile:
             # Instanciate the parser and try to get the digest:
-            logparser = OdooTestDigest(testfile)
+            logparser = odoo_log_parser.OdooTestDigest(testfile)
             digest = logparser.get_full_test_digest()
             # Assert on digest results:
             self.assertEqual( list(digest.keys()), ["adhoc-test17"])
@@ -25,7 +25,7 @@ class TestOdooTestDigest(unittest.TestCase):
         """
         with open(self.odoolog_skels_demo['filename'], "r") as testfile:
             # Instanciate the parser and try to get the digest:
-            logparser = OdooTestDigest(testfile)
+            logparser = odoo_log_parser.OdooTestDigest(testfile)
             digest = logparser.get_full_test_digest()
             # Assert on digest results:
             self.assertLength( digest["adhoc-test17"]['tests_failing'], 1 )
@@ -36,7 +36,7 @@ class TestOdooTestDigest(unittest.TestCase):
         """
         with open(self.odoolog_skels_demo['filename'], "r") as testfile:
             # Instanciate the parser and try to get the digest:
-            logparser = OdooTestDigest(testfile)
+            logparser = odoo_log_parser.OdooTestDigest(testfile)
             digest = logparser.get_full_test_digest()
             # Assert on digest results:
             self.assertEqual(
@@ -49,7 +49,7 @@ class TestOdooTestDigest(unittest.TestCase):
         """
         with open(self.odoolog_skels_demo['filename'], "r") as testfile:
             # Instanciate the parser and try to get the digest:
-            logparser = OdooTestDigest(testfile)
+            logparser = odoo_log_parser.OdooTestDigest(testfile)
             digest = logparser.get_full_test_digest()
             # Assert on digest results:
             self.assertMultilineStringsEqual(
@@ -68,7 +68,7 @@ AssertionError: False is not true
         """
         with open(self.odoolog_with_setup_errors['filename'], "r") as testfile:
             # Instanciate the parser and try to get the digest:
-            logparser = OdooTestDigest(testfile)
+            logparser = odoo_log_parser.OdooTestDigest(testfile)
             digest = logparser.get_full_test_digest()
             # Assert on digest results:
             setup_errors = digest["demodevel-jj-hr-odoo13"]['setup_errors']
@@ -92,7 +92,7 @@ AttributeError: type object 'TestObjects' has no attribute 'env'
         """
         with open(self.odoolog_with_test_errors['filename'], "r") as testfile:
             # Instanciate the parser and try to get the digest:
-            logparser = OdooTestDigest(testfile)
+            logparser = odoo_log_parser.OdooTestDigest(testfile)
             digest = logparser.get_full_test_digest()
             # Assert on digest results:
             tests_errors = digest["demodevel-jj-hr-odoo13"]['tests_errors']
@@ -154,7 +154,7 @@ TypeError: Mixing apples and oranges: hr.payslip.line(1, 3, 4, 5, 6).concat(1)
         """
         with open(self.odoolog_two_succeeded['filename'], "r") as testfile:
             # Instanciate the parser and try to get the digest:
-            logparser = OdooTestDigest(testfile)
+            logparser = odoo_log_parser.OdooTestDigest(testfile)
             digest = logparser.get_full_test_digest()
             # Assert on digest results:
             tests_errors = digest["demodevel-jj-hr-odoo13"]['tests_succeeded']
@@ -195,7 +195,7 @@ TypeError: Mixing apples and oranges: hr.payslip.line(1, 3, 4, 5, 6).concat(1)
         """
         with open(self.odoolog_skels_demo['filename'], "r") as testfile:
             # Instanciate the parser and try to get the digest:
-            logparser = OdooTestDigest(testfile)
+            logparser = odoo_log_parser.OdooTestDigest(testfile)
             digest = logparser.get_full_test_digest()
             # Assert that failure is not also miscounted as a success:
             sucks = [é['test_path'] for é in digest["adhoc-test17"]['tests_succeeded']]
@@ -214,7 +214,7 @@ TypeError: Mixing apples and oranges: hr.payslip.line(1, 3, 4, 5, 6).concat(1)
         """
         with open(self.odoolog_with_test_errors['filename'], "r") as testfile:
             # Instanciate the parser and try to get the digest:
-            logparser = OdooTestDigest(testfile)
+            logparser = odoo_log_parser.OdooTestDigest(testfile)
             digest = logparser.get_full_test_digest()
             # Assert that failure is not also miscounted as a success:
             sucks = [é['test_path'] for é in digest["demodevel-jj-hr-odoo13"]['tests_succeeded']]
@@ -243,7 +243,7 @@ TypeError: Mixing apples and oranges: hr.payslip.line(1, 3, 4, 5, 6).concat(1)
         """
         with open(self.odoolog_with_setup_errors['filename'], "r") as testfile:
             # Instanciate the parser and try to get the digest:
-            logparser = OdooTestDigest(testfile)
+            logparser = odoo_log_parser.OdooTestDigest(testfile)
             digest = logparser.get_full_test_digest()
             # Assert that failure is not also miscounted as a success:
             sucks = [é['test_path'] for é in digest["demodevel-jj-hr-odoo13"]['tests_succeeded']]
