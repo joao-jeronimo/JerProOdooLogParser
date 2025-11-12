@@ -2,8 +2,9 @@
 import re, unittest, random, os, odoo_log_parser
 from unittest import TestCase
 from unittest.mock import Mock, MagicMock
+from . import extra_assert
 
-class TestOdooTestDigest(unittest.TestCase):
+class TestOdooTestDigest(unittest.TestCase, extra_assert.ExtraAssert):
     """
     Test behaviour of class odoo_log_parser.OdooTestDigest.
     """
@@ -52,7 +53,7 @@ class TestOdooTestDigest(unittest.TestCase):
             logparser = odoo_log_parser.OdooTestDigest(testfile)
             digest = logparser.get_full_test_digest()
             # Assert on digest results:
-            self.assertMultilineStringsEqual(
+            self.assertEqual(
 	        	digest["adhoc-test17"]['tests_failing'][0]['test_log'],
 	        	"""FAIL: TestObjects.test_fails
 Traceback (most recent call last):
@@ -74,7 +75,7 @@ AssertionError: False is not true
             setup_errors = digest["demodevel-jj-hr-odoo13"]['setup_errors']
             self.assertLength( setup_errors, 1 )
             self.assertEqual( setup_errors[0]['test_path'], "odoo.addons.test_simple_payslip_template.tests.test_skel.TestObjects.setUpClass" )
-            self.assertMultilineStringsEqual(
+            self.assertEqual(
 	        	setup_errors[0]['test_log'],
 	        	"""ERROR: setUpClass (odoo.addons.test_simple_payslip_template.tests.test_skel.TestObjects)
 Traceback (most recent call last):
@@ -101,7 +102,7 @@ AttributeError: type object 'TestObjects' has no attribute 'env'
             self.assertEqual(
                 tests_errors[0]['test_path'],
                 "odoo.addons.test_simple_payslip_template.tests.test_action_report_simplepayslip.TestActionReportSimplePayslip.test_report_action_created_and_conditioned" )
-            self.assertMultilineStringsEqual(
+            self.assertEqual(
 	        	tests_errors[0]['test_log'],
 	        	"""ERROR: TestActionReportSimplePayslip.test_report_action_created_and_conditioned
 Traceback (most recent call last):
@@ -135,7 +136,7 @@ ValueError: not enough values to unpack (expected 2, got 1)
             self.assertEqual(
                 tests_errors[1]['test_path'],
                 "odoo.addons.test_simple_payslip_template.tests.test_printing_payslip.TestPrintingPayslip.test_printing_payslip" )
-            self.assertMultilineStringsEqual(
+            self.assertEqual(
 	        	tests_errors[1]['test_log'],
 	        	"""ERROR: TestPrintingPayslip.test_printing_payslip
 Traceback (most recent call last):
@@ -167,14 +168,14 @@ TypeError: Mixing apples and oranges: hr.payslip.line(1, 3, 4, 5, 6).concat(1)
                 ".tests.test_action_report_simplepayslip"
                 ".TestActionReportSimplePayslip"
                 ".test_report_action_created_and_conditioned" )
-            self.assertMultilineStringsEqual(
+            self.assertEqual(
 	        	tests_errors[0]['test_log'],
 	        	"""Starting TestActionReportSimplePayslip.test_report_action_created_and_conditioned ... """ )
             # Second test:
             self.assertEqual(
                 tests_errors[1]['test_path'],
                 "odoo.addons.test_simple_payslip_template.tests.test_printing_payslip.TestPrintingPayslip.test_beginnings" )
-            self.assertMultilineStringsEqual(
+            self.assertEqual(
 	        	tests_errors[1]['test_log'],
 	        	"""Starting TestPrintingPayslip.test_beginnings ... """ )
             # Third test:
@@ -183,7 +184,7 @@ TypeError: Mixing apples and oranges: hr.payslip.line(1, 3, 4, 5, 6).concat(1)
                 "odoo.addons.test_simple_payslip_template"
                 ".tests.test_printing_payslip"
                 ".TestPrintingPayslip.test_printing_payslip" )
-            self.assertMultilineStringsEqual(
+            self.assertEqual(
 	        	tests_errors[2]['test_log'],
 	        	"""Starting TestPrintingPayslip.test_printing_payslip ... """ )
     
