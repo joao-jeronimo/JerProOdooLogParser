@@ -13,7 +13,7 @@ case $1 in
   
   test_unit)
     pushd JerProOdooLogParser/
-    pytest $PYTEST_FLAGS -m unit
+    pytest $PYTEST_FLAGS
     popd
     ;;
   *)

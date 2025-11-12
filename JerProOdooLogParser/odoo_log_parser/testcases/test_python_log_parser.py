@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
-import re, unittest, random, os
-from python_log_parser.testcases.common import PythonLogParser_TestUtils
+import re, unittest, random, os, odoo_log_parser
+from odoo_log_parser.testcases.common import PythonLogParser_TestUtils
 from unittest import TestCase
 from unittest.mock import Mock, MagicMock
-from python_log_parser import *
 
 class TestPythonLogParser(unittest.TestCase, PythonLogParser_TestUtils):
     """
