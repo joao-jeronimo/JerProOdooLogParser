@@ -4,7 +4,7 @@ Example of use:
 
     # -*- coding: utf-8 -*-
     import odoo_log_parser
-    with open("odoo_log_file.log, "r") as logfilo:
+    with open("odoo_log_file.log", "r") as logfilo:
         logparser = odoo_log_parser.OdooTestDigest(logfilo)
         digest = logparser.get_full_test_digest()
         # Accessing test data:
