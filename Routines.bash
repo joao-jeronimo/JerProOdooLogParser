@@ -16,6 +16,20 @@ case $1 in
     pytest $PYTEST_FLAGS
     popd
     ;;
+  
+  reinvent_wheel)
+    python3 -m pip install --upgrade build
+    pushd JerProOdooLogParser/
+    python3 -m build
+    popd
+    ;;
+  publish_wheel)
+    python3 -m pip install --upgrade twine
+    pushd JerProOdooLogParser/
+    python3 -m twine upload --repository pypi dist/*
+    popd
+    ;;
+    
   *)
     echo "Unknown routine name: $1"
     exit -1
