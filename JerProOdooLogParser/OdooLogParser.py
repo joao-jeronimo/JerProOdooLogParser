@@ -9,10 +9,14 @@ def Main(exec_name, exec_argv):
         exec_name   The bin name used to call the program.
         exec_argv   Array of program arguments to parse.
     """
-    # Cmdline config:
+    ### Cmdline config:
     parser = argparse.ArgumentParser(description='A program for parsing and resuming Odoo logs.')
     parser.add_argument('--odoolog', type=str,
         help=('Odoo ligfile path.'))
     args = parser.parse_args(args=exec_argv)
+    ### See if there are only sucesses:
+    all_success = True
+    ### Devise a proper return value in POSIX language:
+    return 0 if all_success else 1
 
 if __name__ == "__main__": exit(Main(exec_name=sys.argv[0], exec_argv=sys.argv[1:]))

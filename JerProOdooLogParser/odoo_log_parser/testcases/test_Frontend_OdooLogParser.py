@@ -3,6 +3,8 @@ import unittest, os, importlib
 from unittest.mock import patch, Mock, MagicMock, call as mocked_call
 frontend_OdooLogParser = importlib.import_module("OdooLogParser")
 
+FIXTURES_DIR = os.path.join(os.path.dirname(__file__), 'fixtures')
+
 class TestFrontend_OdooLogParser(unittest.TestCase):
     """
     Top-down tests the OdooLogParser.py frontend
@@ -13,7 +15,14 @@ class TestFrontend_OdooLogParser(unittest.TestCase):
         Method Main() must return non-zero if the logfile
         contains traces non-successfull test.
         """
-        frontend_OdooLogParser.Main("OdooLogParser.py", ['--odoolog', '/path/to/odoo/logfile.log'])
+        self.assertPosixFailure(frontend_OdooLogParser.Main("OdooLogParser.py", ['--odoolog', os.path.join(FIXTURES_DIR, 'odoolog_errors_in_called_by_setup.log')]))
+        self.assertPosixFailure(frontend_OdooLogParser.Main("OdooLogParser.py", ['--odoolog', os.path.join(FIXTURES_DIR, 'odoolog_moddep_errors.log')]) )
+        self.assertPosixFailure(frontend_OdooLogParser.Main("OdooLogParser.py", ['--odoolog', os.path.join(FIXTURES_DIR, 'odoolog_mod_install_errors.log')]) )
+        self.assertPosixFailure(frontend_OdooLogParser.Main("OdooLogParser.py", ['--odoolog', os.path.join(FIXTURES_DIR, 'odoolog_skels_demo.log')]) )
+        self.assertPosixSuccess(frontend_OdooLogParser.Main("OdooLogParser.py", ['--odoolog', os.path.join(FIXTURES_DIR, 'odoolog_two_succeeded.log')]) )
+        self.assertPosixFailure(frontend_OdooLogParser.Main("OdooLogParser.py", ['--odoolog', os.path.join(FIXTURES_DIR, 'odoolog_with_setup_errors.log')]) )
+        self.assertPosixFailure(frontend_OdooLogParser.Main("OdooLogParser.py", ['--odoolog', os.path.join(FIXTURES_DIR, 'odoolog_with_test_errors.log')]) )
+        self.assertPosixFailure(frontend_OdooLogParser.Main("OdooLogParser.py", ['--odoolog', os.path.join(FIXTURES_DIR, 'odoolog_wrong_version_string.log')]) )
     
     ############################################################
     ############################################################
