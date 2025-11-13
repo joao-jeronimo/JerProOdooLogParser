@@ -8,5 +8,6 @@ setup(
         'odoo_log_parser',
         ],
     scripts=[
+        'OdooLogParser.py',
         ],
     )
