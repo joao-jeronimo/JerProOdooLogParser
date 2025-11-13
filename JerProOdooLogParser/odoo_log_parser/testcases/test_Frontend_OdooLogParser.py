@@ -8,12 +8,12 @@ class TestFrontend_OdooLogParser(unittest.TestCase):
     Top-down tests the OdooLogParser.py frontend
     """
     
-    @patch('builtins.print')
-    def test_Main_skel(self, mock_print):
+    def test_Main_fails_on_nonsucess_logfile(self):
         """
-        O método Main() esqueleto.
+        Method Main() must return non-zero if the logfile
+        contains traces non-successfull test.
         """
-        frontend_OdooLogParser.Main("OdooLogParser.py", [])
+        frontend_OdooLogParser.Main("OdooLogParser.py", ['--odoolog', '/path/to/odoo/logfile.log'])
     
     ############################################################
     ############################################################

@@ -11,6 +11,8 @@ def Main(exec_name, exec_argv):
     """
     # Cmdline config:
     parser = argparse.ArgumentParser(description='A program for parsing and resuming Odoo logs.')
+    parser.add_argument('--odoolog', type=str,
+        help=('Odoo ligfile path.'))
     args = parser.parse_args(args=exec_argv)
 
 if __name__ == "__main__": exit(Main(exec_name=sys.argv[0], exec_argv=sys.argv[1:]))
