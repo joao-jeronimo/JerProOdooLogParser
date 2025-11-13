@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-import unittest, os, importlib
+import unittest, os, importlib, assert_mixins
 from unittest.mock import patch, Mock, MagicMock, call as mocked_call
 frontend_OdooLogParser = importlib.import_module("OdooLogParser")
 
 FIXTURES_DIR = os.path.join(os.path.dirname(__file__), 'fixtures')
 
-class TestFrontend_OdooLogParser(unittest.TestCase):
+class TestFrontend_OdooLogParser(unittest.TestCase, assert_mixins.ElementaryMixin):
     """
     Top-down tests the OdooLogParser.py frontend
     """
