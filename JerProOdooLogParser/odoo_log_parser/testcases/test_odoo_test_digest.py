@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
-import re, unittest, random, os, odoo_log_parser
+import re, unittest, random, os, assert_mixins, odoo_log_parser
 from unittest import TestCase
 from unittest.mock import Mock, MagicMock
-from . import extra_assert
 
-class TestOdooTestDigest(unittest.TestCase, extra_assert.ExtraAssert):
+class TestOdooTestDigest(unittest.TestCase, assert_mixins.ElementaryMixin):
     """
     Test behaviour of class odoo_log_parser.OdooTestDigest.
     """
