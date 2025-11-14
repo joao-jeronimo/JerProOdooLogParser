@@ -40,6 +40,30 @@ class TestFrontend_OdooLogParser(unittest.TestCase, assert_mixins.PosixMixin):
         for fn in filenames:
             self.assertPosixSuccess(frontend_OdooLogParser.Main("OdooLogParser.py", ['--always-succeed', '--odoolog', os.path.join(FIXTURES_DIR, fn)]))
     
+    @patch('builtins.print')
+    def test_Main_echo_mode_is_optionso(self, mock_print):
+        """
+        Flag --echo-mode is optional but tells the use that (s)he can use it.
+        """
+        front_retval = frontend_OdooLogParser.Main("OdooLogParser.py", [
+            '--always-succeed',
+            '--odoolog', os.path.join(FIXTURES_DIR, 'odoolog_two_succeeded.log'),
+            ])
+        mock_print.assert_called_once_with("Hint: Use the --echo-mode flag to parse the log digest.")
+        self.assertPosixSuccess(front_retval)
+    @patch('builtins.print')
+    def test_Main_echo_mode_fails_on_crazy_mode(self, mock_print):
+        """
+        Flag --echo-mode causes the program to fail of an invalid mode is requested.
+        """
+        front_retval = frontend_OdooLogParser.Main("OdooLogParser.py", [
+            '--always-succeed',
+            '--echo-mode', 'this-is-an-invalid-echo-mode-name',
+            '--odoolog', os.path.join(FIXTURES_DIR, 'odoolog_two_succeeded.log'),
+            ])
+        mock_print.assert_called_once_with("ERROR: Echo mode 'this-is-an-invalid-echo-mode-name' not found!")
+        self.assertPosixFailure(front_retval)
+    
     ############################################################
     ############################################################
     ############################################################
