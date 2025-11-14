@@ -13,7 +13,7 @@ def Main(exec_name, exec_argv):
     ### Cmdline config:
     parser = argparse.ArgumentParser(description='A program for parsing and resuming Odoo logs.')
     parser.add_argument('--odoolog', type=str,
-        help=('Odoo ligfile path.'))
+        help=('Odoo logfile path.'))
     parser.add_argument('--echo-mode', type=str,
         help=('A comma-separated list of modes on how the log digest is to be echoed to the user.'))
     parser.add_argument('--always-succeed', action='store_const', const=True, default=False,
