@@ -63,4 +63,3 @@ def Main(exec_name, exec_argv):
         return 0 if all_success else 1
 
 def entrypoint(): exit(Main(exec_name=sys.argv[0], exec_argv=sys.argv[1:]))
-if __name__ == "__main__": entrypoint()

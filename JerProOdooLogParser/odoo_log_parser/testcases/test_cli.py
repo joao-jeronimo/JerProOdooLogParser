@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 import unittest, os, importlib, assert_mixins
 from unittest.mock import patch, Mock, MagicMock, call as mocked_call
-frontend_OdooLogParser = importlib.import_module("OdooLogParser")
+from odoo_log_parser.cli import Main as CliMain
 
 FIXTURES_DIR = os.path.join(os.path.dirname(__file__), 'fixtures')
 
-class TestFrontend_OdooLogParser(unittest.TestCase, assert_mixins.PosixMixin):
+class TestCli(unittest.TestCase, assert_mixins.PosixMixin):
     """
     Top-down tests the OdooLogParser.py frontend
     """
@@ -15,18 +15,18 @@ class TestFrontend_OdooLogParser(unittest.TestCase, assert_mixins.PosixMixin):
         Method Main() must return non-zero if the logfile contains traces
         non-successfull test.
         """
-        self.assertPosixFailure(frontend_OdooLogParser.Main("OdooLogParser.py", ['--odoolog', os.path.join(FIXTURES_DIR, 'odoolog_errors_in_called_by_setup.log')]))
-        self.assertPosixFailure(frontend_OdooLogParser.Main("OdooLogParser.py", ['--odoolog', os.path.join(FIXTURES_DIR, 'odoolog_skels_demo.log')]) )
-        self.assertPosixSuccess(frontend_OdooLogParser.Main("OdooLogParser.py", ['--odoolog', os.path.join(FIXTURES_DIR, 'odoolog_two_succeeded.log')]) )
-        self.assertPosixFailure(frontend_OdooLogParser.Main("OdooLogParser.py", ['--odoolog', os.path.join(FIXTURES_DIR, 'odoolog_with_setup_errors.log')]) )
-        self.assertPosixFailure(frontend_OdooLogParser.Main("OdooLogParser.py", ['--odoolog', os.path.join(FIXTURES_DIR, 'odoolog_with_test_errors.log')]) )
+        self.assertPosixFailure(CliMain("OdooLogParser.py", ['--odoolog', os.path.join(FIXTURES_DIR, 'odoolog_errors_in_called_by_setup.log')]))
+        self.assertPosixFailure(CliMain("OdooLogParser.py", ['--odoolog', os.path.join(FIXTURES_DIR, 'odoolog_skels_demo.log')]) )
+        self.assertPosixSuccess(CliMain("OdooLogParser.py", ['--odoolog', os.path.join(FIXTURES_DIR, 'odoolog_two_succeeded.log')]) )
+        self.assertPosixFailure(CliMain("OdooLogParser.py", ['--odoolog', os.path.join(FIXTURES_DIR, 'odoolog_with_setup_errors.log')]) )
+        self.assertPosixFailure(CliMain("OdooLogParser.py", ['--odoolog', os.path.join(FIXTURES_DIR, 'odoolog_with_test_errors.log')]) )
         ### To be fixed:
         # Module dependency errors are not detected as such for now:
-        self.assertPosixSuccess(frontend_OdooLogParser.Main("OdooLogParser.py", ['--odoolog', os.path.join(FIXTURES_DIR, 'odoolog_moddep_errors.log')]) )
+        self.assertPosixSuccess(CliMain("OdooLogParser.py", ['--odoolog', os.path.join(FIXTURES_DIR, 'odoolog_moddep_errors.log')]) )
         # Module install errors are not detected as such for now:
-        self.assertPosixSuccess(frontend_OdooLogParser.Main("OdooLogParser.py", ['--odoolog', os.path.join(FIXTURES_DIR, 'odoolog_mod_install_errors.log')]) )
+        self.assertPosixSuccess(CliMain("OdooLogParser.py", ['--odoolog', os.path.join(FIXTURES_DIR, 'odoolog_mod_install_errors.log')]) )
         # Module version string errors are not detected as such for now:
-        self.assertPosixSuccess(frontend_OdooLogParser.Main("OdooLogParser.py", ['--odoolog', os.path.join(FIXTURES_DIR, 'odoolog_wrong_version_string.log')]) )
+        self.assertPosixSuccess(CliMain("OdooLogParser.py", ['--odoolog', os.path.join(FIXTURES_DIR, 'odoolog_wrong_version_string.log')]) )
     
     def test_Main_always_succeed_avoids_failing(self):
         """
@@ -38,14 +38,14 @@ class TestFrontend_OdooLogParser(unittest.TestCase, assert_mixins.PosixMixin):
             'odoolog_with_test_errors.log',             'odoolog_moddep_errors.log',    'odoolog_mod_install_errors.log',   'odoolog_wrong_version_string.log',
             ]
         for fn in filenames:
-            self.assertPosixSuccess(frontend_OdooLogParser.Main("OdooLogParser.py", ['--always-succeed', '--odoolog', os.path.join(FIXTURES_DIR, fn)]))
+            self.assertPosixSuccess(CliMain("OdooLogParser.py", ['--always-succeed', '--odoolog', os.path.join(FIXTURES_DIR, fn)]))
     
     @patch('builtins.print')
     def test_Main_echo_mode_is_optionso(self, mock_print):
         """
         Flag --echo-mode is optional but tells the use that (s)he can use it.
         """
-        front_retval = frontend_OdooLogParser.Main("OdooLogParser.py", [
+        front_retval = CliMain("OdooLogParser.py", [
             '--always-succeed',
             '--odoolog', os.path.join(FIXTURES_DIR, 'odoolog_two_succeeded.log'),
             ])
@@ -56,7 +56,7 @@ class TestFrontend_OdooLogParser(unittest.TestCase, assert_mixins.PosixMixin):
         """
         Flag --echo-mode causes the program to fail of an invalid mode is requested.
         """
-        front_retval = frontend_OdooLogParser.Main("OdooLogParser.py", [
+        front_retval = CliMain("OdooLogParser.py", [
             '--always-succeed',
             '--echo-mode', 'this-is-an-invalid-echo-mode-name',
             '--odoolog', os.path.join(FIXTURES_DIR, 'odoolog_two_succeeded.log'),
@@ -68,7 +68,7 @@ class TestFrontend_OdooLogParser(unittest.TestCase, assert_mixins.PosixMixin):
         """
         Flag «--echo-mode python» causes the raw digest to be printed out.
         """
-        front_retval = frontend_OdooLogParser.Main("OdooLogParser.py", [
+        front_retval = CliMain("OdooLogParser.py", [
             '--always-succeed',
             '--echo-mode', 'python',
             '--odoolog', os.path.join(FIXTURES_DIR, 'odoolog_two_succeeded.log'),

@@ -16,3 +16,6 @@ readme = 'README.md'
 dependencies = [
 	]
 requires-python = ">=3.7"
+
+[project.scripts]
+OdooLogParser = "odoo_log_parser.cli:entrypoint"
