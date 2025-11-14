@@ -17,5 +17,8 @@ dependencies = [
 	]
 requires-python = ">=3.7"
 
+[tool.setuptools]
+packages = ["odoo_log_parser"]
+
 [project.scripts]
 OdooLogParser = "odoo_log_parser.cli:entrypoint"
