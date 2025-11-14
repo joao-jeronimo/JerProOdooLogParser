@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import argparse, odoo_log_parser, os, sys, importlib
+from importlib.metadata import entry_points
 
 def Main(exec_name, exec_argv):
     """
@@ -16,9 +17,18 @@ def Main(exec_name, exec_argv):
         help=('Odoo logfile path.'))
     parser.add_argument('--echo-mode', type=str,
         help=('A comma-separated list of modes on how the log digest is to be echoed to the user.'))
+    parser.add_argument('--list-echo-modes', action='store_const', const=True, default=False,
+        help=('Just print-out a list of echo modes.'))
     parser.add_argument('--always-succeed', action='store_const', const=True, default=False,
         help=('Always return SUCCESS regardles of test failures.'))
     args = parser.parse_args(args=exec_argv)
+    ####################################
+    ## Implement echo mode listing:
+    if args.list_echo_modes:
+        print("=== Echo modes:")
+        all_echo_modes = entry_points(group='odoo_log_parser.echo_modes')
+        print(all_echo_modes)
+        return 0
     ####################################
     ## Resume the logfile:
     with open(args.odoolog, "r") as logfilo:

@@ -24,4 +24,4 @@ packages = ["odoo_log_parser"]
 OdooLogParser = "odoo_log_parser.cli:entrypoint"
 
 [project.entry-points."odoo_log_parser.echo_modes"]
-digest2string = "odoo_log_parser.echo_modes:pretty_digest2string"
+pretty = "odoo_log_parser.echo_modes:pretty_digest2string"
