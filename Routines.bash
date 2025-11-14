@@ -6,8 +6,13 @@ PYTEST_FLAGS="-o log_cli=true -o log_cli_level=INFO"
 case $1 in
   deps_devel)
     pushd JerProOdooLogParser/
-    sudo apt-get install 
     python3 -m pip install --upgrade -r requirements.txt
+    popd
+    ;;
+  
+  install_program)
+    pushd JerProOdooLogParser/
+    pip install -e .
     popd
     ;;
   
