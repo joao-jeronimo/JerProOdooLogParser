@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from importlib.metadata import entry_points
 
 class EchoMode:
     @classmethod
@@ -12,3 +13,10 @@ class EchoMode:
             return repr
         else:
             return None
+
+    @classmethod
+    def get_echo_modes_list(self):
+        return [
+            em.name
+            for em in entry_points(group='odoo_log_parser.echo_modes')
+            ]

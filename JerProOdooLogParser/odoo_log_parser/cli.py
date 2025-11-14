@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import argparse, odoo_log_parser, os, sys, importlib
-from importlib.metadata import entry_points
 
 def Main(exec_name, exec_argv):
     """
@@ -25,9 +24,10 @@ def Main(exec_name, exec_argv):
     ####################################
     ## Implement echo mode listing:
     if args.list_echo_modes:
+        eml = odoo_log_parser.EchoMode.get_echo_modes_list()
         print("=== Echo modes:")
-        all_echo_modes = entry_points(group='odoo_log_parser.echo_modes')
-        print(all_echo_modes)
+        for emn in eml:
+            print(emn)
         return 0
     ####################################
     ## Resume the logfile:
