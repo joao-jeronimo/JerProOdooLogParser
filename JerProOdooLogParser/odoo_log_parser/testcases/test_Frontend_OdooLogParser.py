@@ -63,6 +63,23 @@ class TestFrontend_OdooLogParser(unittest.TestCase, assert_mixins.PosixMixin):
             ])
         mock_print.assert_called_once_with("ERROR: Echo mode 'this-is-an-invalid-echo-mode-name' not found!")
         self.assertPosixFailure(front_retval)
+    @patch('builtins.print')
+    def test_Main_echo_mode_python_prints_python(self, mock_print):
+        """
+        Flag «--echo-mode python» causes the raw digest to be printed out.
+        """
+        front_retval = frontend_OdooLogParser.Main("OdooLogParser.py", [
+            '--always-succeed',
+            '--echo-mode', 'python',
+            '--odoolog', os.path.join(FIXTURES_DIR, 'odoolog_two_succeeded.log'),
+            ])
+        mock_print.assert_called_once_with(
+              f"===============================\n"
+            + f"== Echoing «python»:\n"
+            + f"===============================\n"
+            + "{'demodevel-jj-hr-odoo13': {'setup_errors': [], 'tests_errors': [], 'tests_failing': [], 'tests_succeeded': [{'test_path': 'odoo.addons.test_simple_payslip_template.tests.test_action_report_simplepayslip.TestActionReportSimplePayslip.test_report_action_created_and_conditioned', 'test_log': 'Starting TestActionReportSimplePayslip.test_report_action_created_and_conditioned ... '}, {'test_path': 'odoo.addons.test_simple_payslip_template.tests.test_printing_payslip.TestPrintingPayslip.test_beginnings', 'test_log': 'Starting TestPrintingPayslip.test_beginnings ... '}, {'test_path': 'odoo.addons.test_simple_payslip_template.tests.test_printing_payslip.TestPrintingPayslip.test_printing_payslip', 'test_log': 'Starting TestPrintingPayslip.test_printing_payslip ... '}]}}" + "\n"
+            )
+        self.assertPosixSuccess(front_retval)
     
     ############################################################
     ############################################################

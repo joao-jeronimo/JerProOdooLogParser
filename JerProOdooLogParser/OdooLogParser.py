@@ -26,7 +26,8 @@ def Main(exec_name, exec_argv):
         digest = logparser.get_full_test_digest()
     ####################################
     ### Optionally parse and echo the digest:
-    echo_mode_classes = list()
+    # Find out how to digest is to be printed:
+    echo_mode_functions = list()
     if args.echo_mode:
         req_modes = args.echo_mode.split(',')
         for rm in req_modes:
@@ -34,9 +35,18 @@ def Main(exec_name, exec_argv):
             if this_pi is None:
                 print(f"ERROR: Echo mode {repr(rm)} not found!")
                 return -1
-            echo_mode_classes.append( this_pi )
+            echo_mode_functions.append( (rm, this_pi) )
     else:
         print("Hint: Use the --echo-mode flag to parse the log digest.")
+    # Print the digest according to what was found out:
+    for pmf in echo_mode_functions:
+        to_print = (
+              f"===============================\n"
+            + f"== Echoing «{pmf[0]}»:\n"
+            + f"===============================\n"
+            + f"{pmf[1](digest)}" + "\n"
+            )
+        print( to_print )
     ### See if there are only sucesses, unless otherwise requested:
     if args.always_succeed:
         return 0
