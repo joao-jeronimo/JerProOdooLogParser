@@ -1,4 +1,5 @@
 from .test_python_log_parser import TestPythonLogParser
 from .test_odoo_test_digest import TestOdooTestDigest
 from .test_parsed_log import TestParsedLog
+from .test_echo_mode import TestEchoMode
 from .test_Frontend_OdooLogParser import TestFrontend_OdooLogParser

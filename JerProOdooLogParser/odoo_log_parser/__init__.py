@@ -1,5 +1,6 @@
 from .python_log_parser import *
 from .odoo_test_digest import *
+from .echo_mode import *
 
 __version__ = "2.0.1"
 __release_notes_2_0_1__ = "Using special vars for determining the test fixtures paths."
