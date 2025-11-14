@@ -5,7 +5,7 @@ frontend_OdooLogParser = importlib.import_module("OdooLogParser")
 
 FIXTURES_DIR = os.path.join(os.path.dirname(__file__), 'fixtures')
 
-class TestFrontend_OdooLogParser(unittest.TestCase, assert_mixins.ElementaryMixin):
+class TestFrontend_OdooLogParser(unittest.TestCase, assert_mixins.PosixMixin):
     """
     Top-down tests the OdooLogParser.py frontend
     """
