@@ -33,7 +33,7 @@ def _wrap_and_mark_lines(src_text, available_len):
     # Reassemble the resulting lines:
     return "\n".join(resulting_lines)
 
-def tabular_digest2string(the_digest, term_width=80):
+def tabular_digest2string(the_digest, term_width=87):
         """
         Convert the test digest, as returned by the python log parsing library, into
         some readable text in a tabular format.
