@@ -21,3 +21,19 @@ class TestEchoMode(unittest.TestCase):
         """
         the_funk = odoo_log_parser.EchoMode.get_echo_plugin("python")
         self.assertEqual( the_funk('thing'), "'thing'" )
+    
+    def test_get_echo_plugin_pretty(self):
+        """
+        Method get_echo_plugin() when called with 'pretty' must return prettified Python code.
+        """
+        the_funk = odoo_log_parser.EchoMode.get_echo_plugin("pretty")
+        self.assertEqual( the_funk([4,5,6,7,3,2,2,[4,5,6,7,3,2,2,[4,5,6,7,3,2,2,[4,5,6,7,3,2,2,]]]]), (
+            "[   4,\n"
+            "    5,\n"
+            "    6,\n"
+            "    7,\n"
+            "    3,\n"
+            "    2,\n"
+            "    2,\n"
+            "    [4, 5, 6, 7, 3, 2, 2, [4, 5, 6, 7, 3, 2, 2, [4, 5, 6, 7, 3, 2, 2]]]]"
+            ))
