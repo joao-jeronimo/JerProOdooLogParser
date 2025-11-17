@@ -10,6 +10,8 @@ jobs:
         - uses: actions/checkout@v4
         - name: Development and test dependencies
           run: ./Routines.bash deps_devel
+        - name: Installing the program in editable mode
+          run: ./Routines.bash install_program
         - name: Pytesting - Unit
           run: ./Routines.bash test_unit
         
