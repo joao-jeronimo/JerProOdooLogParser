@@ -8,6 +8,7 @@ class TestEchoMode(unittest.TestCase):
     """
     Test behaviour of class odoo_log_parser.EchoMode.
     """
+    maxDiff = None
     
     def test_get_echo_plugin_invalid_plugin(self):
         """

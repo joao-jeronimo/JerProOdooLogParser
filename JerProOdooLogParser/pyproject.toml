@@ -25,3 +25,4 @@ OdooLogParser = "odoo_log_parser.cli:entrypoint"
 
 [project.entry-points."odoo_log_parser.echo_modes"]
 pretty = "odoo_log_parser.echo_modes:pretty_digest2string"
+tabular = "odoo_log_parser.echo_modes:tabular_digest2string"
